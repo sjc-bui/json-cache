@@ -5,7 +5,7 @@
 //  Created by quan bui on 2021/06/25.
 //
 
-struct Shop: Decodable {
+struct Shop: Codable {
   let shopCode: String
   let shopName: String
   let shopPhone: String

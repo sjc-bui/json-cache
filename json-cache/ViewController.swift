@@ -15,7 +15,7 @@ class ViewController: UITableViewController, URLSessionDelegate {
   var shops: Shops = []
   private var currentTask: URLSessionTask?
   private let cache = Cache<String, Shops>()
-  private let key = "tbv"
+  private let name = "fileName2"
 
   override init(style: UITableView.Style) {
     super.init(style: style)
@@ -29,27 +29,37 @@ class ViewController: UITableViewController, URLSessionDelegate {
     super.viewDidLoad()
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     setNavButton()
-    let cachedData = cache.value(forKey: key)
 
-    if cachedData == nil {
-      makeReq()
-    } else {
-      shops = cachedData!
-      DispatchQueue.main.async {
-        self.tableView.reloadData()
+    let folderUrls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+    print(folderUrls)
+    let fileUrl = folderUrls[0].appendingPathComponent(name).appendingPathExtension("cache")
+    do {
+      let cache = try JSONDecoder().decode(Cache<String, Shops>.self, from: try Data(contentsOf: fileUrl))
+      if let data = cache.value(forKey: "shopList") {
+        shops = data
+        tableView.reloadData()
+        QBToast(message: "Data from cache.", duration: 2.5, state: .info).showToast()
+        return
       }
+    } catch let err {
+      print(err)
     }
+    makeReq()
   }
 
   func setNavButton() {
-    let rightBarBtn = UIBarButtonItem(title: "Reload", style: .plain, target: self, action: #selector(reloadDt))
+    let rightBarBtn = UIBarButtonItem(title: "Save cache", style: .plain, target: self, action: #selector(reloadDt))
     navigationItem.rightBarButtonItem = rightBarBtn
   }
-  
+
   @objc func reloadDt() {
-    guard (cache.value(forKey: key) != nil) else {
-      makeReq()
-      return
+    DispatchQueue.main.async {
+      do {
+        try self.cache.saveToDisk(withName: self.name)
+        print("Saved.")
+      } catch let err {
+        print(err)
+      }
     }
   }
 
@@ -68,8 +78,8 @@ class ViewController: UITableViewController, URLSessionDelegate {
             data != nil else { return }
       self.shops = data!
       DispatchQueue.main.async {
-        self.cache.insert(self.shops, forKey: self.key)
         self.tableView.reloadData()
+        self.cache.insert(self.shops, forKey: "shopList")
         QBToast(message: "Internet request", duration: 2.5, state: .success).showToast()
       }
     }
