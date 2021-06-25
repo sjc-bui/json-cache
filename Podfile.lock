@@ -1,0 +1,16 @@
+PODS:
+  - QBToast (0.1.8)
+
+DEPENDENCIES:
+  - QBToast
+
+SPEC REPOS:
+  trunk:
+    - QBToast
+
+SPEC CHECKSUMS:
+  QBToast: 2571e72b92bd0dbb9b1a4f7c91ae207df7f084ef
+
+PODFILE CHECKSUM: 2794d2cfacce88fd3020297a9a0af2973ef7645e
+
+COCOAPODS: 1.10.1
