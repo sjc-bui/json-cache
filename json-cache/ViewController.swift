@@ -16,6 +16,7 @@ class ViewController: UITableViewController, URLSessionDelegate {
   private var currentTask: URLSessionTask?
   private let cache = Cache<String, Shops>()
   private let name = "fileName2"
+  private let fresh = UIRefreshControl()
 
   override init(style: UITableView.Style) {
     super.init(style: style)
@@ -28,8 +29,24 @@ class ViewController: UITableViewController, URLSessionDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    setNavButton()
+    fresh.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    tableView.refreshControl = fresh
 
+    setNavButton()
+    fetch()
+  }
+
+  func setNavButton() {
+    let rightBarBtn = UIBarButtonItem(title: "Save cache", style: .plain, target: self, action: #selector(reloadDt))
+    navigationItem.rightBarButtonItem = rightBarBtn
+  }
+
+  @objc func pullToRefresh() {
+    fetch()
+    fresh.endRefreshing()
+  }
+
+  private func fetch() {
     let folderUrls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
     print(folderUrls)
     let fileUrl = folderUrls[0].appendingPathComponent(name).appendingPathExtension("cache")
@@ -39,28 +56,24 @@ class ViewController: UITableViewController, URLSessionDelegate {
         shops = data
         tableView.reloadData()
         QBToast(message: "Data from cache.", duration: 2.5, state: .info).showToast()
-        return
+      } else {
+        makeReq()
+        QBToast(message: "Internet request", duration: 2.5, state: .success).showToast()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+          do {
+            try self.cache.saveToDisk(withName: self.name)
+            print("Saved cache.")
+          } catch let err {
+            print(err)
+          }
+        }
       }
     } catch let err {
       print(err)
     }
-    makeReq()
-  }
-
-  func setNavButton() {
-    let rightBarBtn = UIBarButtonItem(title: "Save cache", style: .plain, target: self, action: #selector(reloadDt))
-    navigationItem.rightBarButtonItem = rightBarBtn
   }
 
   @objc func reloadDt() {
-    DispatchQueue.main.async {
-      do {
-        try self.cache.saveToDisk(withName: self.name)
-        print("Saved.")
-      } catch let err {
-        print(err)
-      }
-    }
   }
 
   override func viewDidDisappear(_ animated: Bool) {
@@ -80,7 +93,6 @@ class ViewController: UITableViewController, URLSessionDelegate {
       DispatchQueue.main.async {
         self.tableView.reloadData()
         self.cache.insert(self.shops, forKey: "shopList")
-        QBToast(message: "Internet request", duration: 2.5, state: .success).showToast()
       }
     }
   }

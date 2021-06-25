@@ -15,7 +15,7 @@ final class Cache<Key: Hashable, Value> {
   private let keyTracker = KeyTracker()
 
   init(dateProvider: @escaping () -> Date = Date.init,
-       lifeTime: TimeInterval = (12 * 60 * 60),
+       lifeTime: TimeInterval = 60,
        maxEntryCount: Int = 50) {
     self.dateProvider = dateProvider
     self.lifeTime     = lifeTime
@@ -76,7 +76,6 @@ extension Cache {
 private extension Cache {
   final class KeyTracker: NSObject, NSCacheDelegate {
     var keys = Set<Key>()
-
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
       guard let entry = obj as? Entry else { return }
       keys.remove(entry.key)
@@ -85,7 +84,6 @@ private extension Cache {
 }
 
 private extension Cache {
-
   func entry(forKey key: Key) -> Entry? {
     guard let entry = cache.object(forKey: WrappedKey(key)) else { return nil }
     guard dateProvider() < entry.expirationDate else {
@@ -104,7 +102,6 @@ private extension Cache {
 extension Cache.Entry: Codable where Key: Codable, Value: Codable {}
 
 extension Cache: Codable where Key: Codable, Value: Codable {
-
   convenience init(from decoder: Decoder) throws {
     self.init()
     let container = try decoder.singleValueContainer()
