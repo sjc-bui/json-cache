@@ -14,8 +14,8 @@ class DetailViewController: UIViewController {
 
   lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
-    layout.minimumLineSpacing = 5
-    layout.minimumInteritemSpacing = 5
+    layout.minimumLineSpacing = 2
+    layout.minimumInteritemSpacing = 2
     let cl = UICollectionView(frame: .zero,
                               collectionViewLayout: layout)
     cl.backgroundColor = .white
@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
     cl.dataSource = self
     cl.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "c")
     cl.register(DetailTableCell.self, forCellWithReuseIdentifier: "tbc")
+    cl.register(SameCollectionViewCell.self, forCellWithReuseIdentifier: "sameCell")
     return cl
   }()
 
@@ -50,34 +51,48 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 15
+    return 5
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     switch indexPath.row {
-      case 0:
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tbc", for: indexPath) as? DetailTableCell
-        cell?.delegate = self
-        return cell!
-      default:
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
-        cell.backgroundColor = .red
-        return cell
+    case 0:
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tbc", for: indexPath) as? DetailTableCell
+      cell?.delegate = self
+      return cell!
+    case 1:
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sameCell", for: indexPath) as? SameCollectionViewCell
+      cell?.delegate = self
+      return cell!
+    default:
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
+      cell.backgroundColor = .red
+      return cell
     }
   }
 }
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    if indexPath.row == 0 {
+    switch indexPath.row {
+    case 0:
       return CGSize(width: collectionView.frame.width, height: 250)
+    case 1:
+      return CGSize(width: collectionView.frame.width, height: 230)
+    default:
+      return CGSize(width: collectionView.frame.width, height: 80)
     }
-    return CGSize(width: collectionView.frame.width, height: 100)
   }
 }
 
 extension DetailViewController: DetailTableCellDelegate {
   func didTapSeemore(detail: String) {
     print(detail)
+  }
+}
+
+extension DetailViewController: SameCollectionViewCellDelegate {
+  func didTapInCell(index: IndexPath) {
+    print("Did tap index = \(index)")
   }
 }
