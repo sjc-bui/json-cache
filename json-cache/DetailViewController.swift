@@ -23,6 +23,7 @@ class DetailViewController: UIViewController {
     cl.delegate = self
     cl.dataSource = self
     cl.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "c")
+    cl.register(DetailTableCell.self, forCellWithReuseIdentifier: "tbc")
     return cl
   }()
 
@@ -53,14 +54,30 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
-    cell.backgroundColor = .red
-    return cell
+    switch indexPath.row {
+      case 0:
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tbc", for: indexPath) as? DetailTableCell
+        cell?.delegate = self
+        return cell!
+      default:
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
+        cell.backgroundColor = .red
+        return cell
+    }
   }
 }
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    if indexPath.row == 0 {
+      return CGSize(width: collectionView.frame.width, height: 250)
+    }
     return CGSize(width: collectionView.frame.width, height: 100)
+  }
+}
+
+extension DetailViewController: DetailTableCellDelegate {
+  func didTapSeemore(detail: String) {
+    print(detail)
   }
 }
