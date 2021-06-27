@@ -16,7 +16,13 @@ class ViewController: UITableViewController, URLSessionDelegate {
   private var currentTask: URLSessionTask?
   private let cache = Cache<String, Shops>()
   private let name = "fileName2"
-  private let fresh = UIRefreshControl()
+
+  private lazy var fresh: UIRefreshControl = {
+    let fr = UIRefreshControl()
+    fr.tintColor = .systemRed
+    fr.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    return fr
+  }()
 
   override init(style: UITableView.Style) {
     super.init(style: style)
@@ -29,7 +35,6 @@ class ViewController: UITableViewController, URLSessionDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    fresh.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     tableView.refreshControl = fresh
 
     setNavButton()
@@ -74,7 +79,6 @@ class ViewController: UITableViewController, URLSessionDelegate {
       case .success(let data):
         self.shops = data!
         self.tableView.reloadData()
-        QBToast(message: "Data from cache.", duration: 2.5, state: .info).showToast()
         break
       case .failure(_):
         self.makeReq()
@@ -179,6 +183,19 @@ extension ViewController {
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
+    guard let item = shops[safe: indexPath.row] else { return }
+    let detail = DetailViewController()
+    detail.config(item)
+    self.navigationController?.pushViewController(detail, animated: true)
+  }
+}
+
+extension Array {
+  subscript(safe index: Int) -> Element? {
+    if index < count && index >= 0 {
+      return self[index]
+    } else {
+      return nil
+    }
   }
 }

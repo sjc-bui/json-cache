@@ -1,16 +1,20 @@
 PODS:
   - QBToast (0.1.8)
+  - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - QBToast
+  - SnapKit (~> 4.2.0)
 
 SPEC REPOS:
   trunk:
     - QBToast
+    - SnapKit
 
 SPEC CHECKSUMS:
   QBToast: 2571e72b92bd0dbb9b1a4f7c91ae207df7f084ef
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 2794d2cfacce88fd3020297a9a0af2973ef7645e
+PODFILE CHECKSUM: bf6593d62585b2aca46c210e9a899c9401b65505
 
 COCOAPODS: 1.10.1

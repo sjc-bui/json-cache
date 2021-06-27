@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E76BB5F26884EC200619874 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E76BB5E26884EC200619874 /* DetailViewController.swift */; };
 		2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E326856B4000922CEE /* AppDelegate.swift */; };
 		2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E526856B4000922CEE /* SceneDelegate.swift */; };
 		2EE234E826856B4000922CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E726856B4000922CEE /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		1C733105924CC6E1D50BB3C6 /* Pods-json-cache.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-json-cache.debug.xcconfig"; path = "Target Support Files/Pods-json-cache/Pods-json-cache.debug.xcconfig"; sourceTree = "<group>"; };
+		2E76BB5E26884EC200619874 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2EE234E026856B4000922CEE /* json-cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "json-cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE234E326856B4000922CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE234E526856B4000922CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				2EE234FB2685934100922CEE /* HttpMethod.swift */,
 				2EE234FF26859A5900922CEE /* APIConfig.swift */,
 				2EE235042685A7FE00922CEE /* Cache.swift */,
+				2E76BB5E26884EC200619874 /* DetailViewController.swift */,
 			);
 			path = "json-cache";
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E76BB5F26884EC200619874 /* DetailViewController.swift in Sources */,
 				2EE234FE2685952600922CEE /* ShopEndPoint.swift in Sources */,
 				2EE234E826856B4000922CEE /* ViewController.swift in Sources */,
 				2EE2350326859B0200922CEE /* EndPointType.swift in Sources */,
