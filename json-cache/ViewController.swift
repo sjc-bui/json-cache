@@ -46,18 +46,38 @@ class ViewController: UITableViewController, URLSessionDelegate {
     fresh.endRefreshing()
   }
 
-  private func fetch() {
+  private func fileURL(forFileName name: String) -> URL {
     let folderUrls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-    print(folderUrls)
-    let fileUrl = folderUrls[0].appendingPathComponent(name).appendingPathExtension("cache")
+    let fileUrl = folderUrls.first!.appendingPathComponent(name).appendingPathExtension("cache")
+    return fileUrl
+  }
+
+  private func readCache<T: Codable>(key: String, type: T.Type, completion: @escaping (Result<T?, Error>) -> Void) {
+    let cacheObj = Cache<String, T>.self
+    let fileUrl = fileURL(forFileName: name)
     do {
-      let cache = try JSONDecoder().decode(Cache<String, Shops>.self, from: try Data(contentsOf: fileUrl))
-      if let data = cache.value(forKey: "shopList") {
-        shops = data
-        tableView.reloadData()
-        QBToast(message: "Data from cache.", duration: 2.5, state: .info).showToast()
+      let cache = try JSONDecoder().decode(cacheObj, from: try Data(contentsOf: fileUrl))
+      if let data = cache.value(forKey: key) {
+        completion(.success(data))
       } else {
-        makeReq()
+        throw NSError(domain: "err", code: 101, userInfo: nil)
+      }
+    } catch let err {
+      completion(.failure(err))
+    }
+  }
+
+  private func fetch() {
+    readCache(key: "shopList", type: Shops.self) { [weak self] result in
+      guard let self = self else { return }
+      switch result {
+      case .success(let data):
+        self.shops = data!
+        self.tableView.reloadData()
+        QBToast(message: "Data from cache.", duration: 2.5, state: .info).showToast()
+        break
+      case .failure(_):
+        self.makeReq()
         QBToast(message: "Internet request", duration: 2.5, state: .success).showToast()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
           do {
@@ -67,9 +87,8 @@ class ViewController: UITableViewController, URLSessionDelegate {
             print(err)
           }
         }
+        break
       }
-    } catch let err {
-      print(err)
     }
   }
 
@@ -88,8 +107,8 @@ class ViewController: UITableViewController, URLSessionDelegate {
     netWorkRequest(request: req, type: Shops.self) { [weak self] err, data in
       guard let self = self,
             err == nil,
-            data != nil else { return }
-      self.shops = data!
+            let dt = data else { return }
+      self.shops = dt
       DispatchQueue.main.async {
         self.tableView.reloadData()
         self.cache.insert(self.shops, forKey: "shopList")
