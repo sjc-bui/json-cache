@@ -10,12 +10,23 @@ import QBToast
 
 typealias Shops = [Shop]
 
-class ViewController: UITableViewController, URLSessionDelegate {
+class ViewController: UIViewController, URLSessionDelegate {
 
   var shops: Shops = []
   private var currentTask: URLSessionTask?
   private let cache = Cache<String, Shops>()
   private let name = "fileName2"
+
+  private lazy var tableView: UITableView = {
+    let tb = UITableView(frame: .zero, style: .plain)
+    tb.showsVerticalScrollIndicator = false
+    tb.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    tb.delegate = self
+    tb.dataSource = self
+    tb.separatorStyle = .none
+    tb.refreshControl = fresh
+    return tb
+  }()
 
   private lazy var fresh: UIRefreshControl = {
     let fr = UIRefreshControl()
@@ -24,21 +35,18 @@ class ViewController: UITableViewController, URLSessionDelegate {
     return fr
   }()
 
-  override init(style: UITableView.Style) {
-    super.init(style: style)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    tableView.refreshControl = fresh
-
+    layoutTableView()
     setNavButton()
     fetch()
+  }
+  
+  func layoutTableView() {
+    view.addSubview(tableView)
+    tableView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
 
   func setNavButton() {
@@ -82,8 +90,7 @@ class ViewController: UITableViewController, URLSessionDelegate {
         break
       case .failure(_):
         self.makeReq()
-        QBToast(message: "Internet request", duration: 2.5, state: .success).showToast()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
           do {
             try self.cache.saveToDisk(withName: self.name)
             print("Saved cache.")
@@ -105,17 +112,23 @@ class ViewController: UITableViewController, URLSessionDelegate {
   }
 
   func makeReq() {
+    Loader.shared.show(view: self.view)
     let endPoint = ShopEndPoint.list
 
     let req = request(endpoint: endPoint)
     netWorkRequest(request: req, type: Shops.self) { [weak self] err, data in
       guard let self = self,
             err == nil,
-            let dt = data else { return }
+            let dt = data else {
+        Loader.shared.hide()
+        return
+      }
+
       self.shops = dt
       DispatchQueue.main.async {
         self.tableView.reloadData()
         self.cache.insert(self.shops, forKey: "shopList")
+        Loader.shared.hide()
       }
     }
   }
@@ -169,24 +182,30 @@ class ViewController: UITableViewController, URLSessionDelegate {
   }
 }
 
-extension ViewController {
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return shops.count
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
     let shop = shops[indexPath.row]
     cell.textLabel?.text = "\(shop.shopName) \(shop.shopPhone)"
     cell.detailTextLabel?.text = "\(shop.shopPostalCode) \(shop.shopAddress)"
+    if indexPath.row % 2 == 0 {
+      cell.backgroundColor = UIColor(hex: "#EFEFEF")
+    } else {
+      cell.backgroundColor = .white
+    }
     return cell
   }
 
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let item = shops[safe: indexPath.row] else { return }
     let detail = DetailViewController()
     detail.config(item)
     self.navigationController?.pushViewController(detail, animated: true)
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }
 
@@ -196,6 +215,84 @@ extension Array {
       return self[index]
     } else {
       return nil
+    }
+  }
+}
+
+extension UIWindow {
+    static var key: UIWindow? {
+        if #available(iOS 13, *) {
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
+        } else {
+            return UIApplication.shared.keyWindow
+        }
+    }
+}
+
+public class Loader{
+
+  fileprivate lazy var overlayView: UIView = {
+    let view = UIView(frame: .zero)
+    view.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin,
+                                    .flexibleRightMargin, .flexibleBottomMargin]
+    view.clipsToBounds = true
+    view.layer.cornerRadius = 10
+    return view
+  }()
+
+  fileprivate lazy var activityIndicator: UIActivityIndicatorView = {
+    let ai = UIActivityIndicatorView()
+    ai.color = .gray
+    ai.style = .medium
+    ai.hidesWhenStopped = true
+    return ai
+  }()
+
+  fileprivate lazy var bgView: UIView = {
+    let view = UIView(frame: .zero)
+    view.backgroundColor = UIColor.systemGroupedBackground
+    view.autoresizingMask = [.flexibleLeftMargin,.flexibleTopMargin,.flexibleRightMargin,
+                             .flexibleBottomMargin,.flexibleHeight, .flexibleWidth]
+    view.layer.opacity = 0
+    return view
+  }()
+
+  static let shared = Loader()
+
+  public func show(view: UIView) {
+    bgView.frame = view.bounds
+    bgView.addSubview(overlayView)
+    overlayView.snp.makeConstraints { make in
+      make.width.height.equalTo(80)
+      make.centerX.equalToSuperview()
+      make.centerY.equalToSuperview()
+    }
+
+    overlayView.addSubview(activityIndicator)
+    activityIndicator.snp.makeConstraints { make in
+      make.width.height.equalTo(40)
+      make.centerX.equalToSuperview()
+      make.centerY.equalToSuperview()
+    }
+
+    view.addSubview(self.bgView)
+    UIView.animate(withDuration: 0.5,
+                   delay: 0,
+                   options: .curveEaseInOut) {
+      self.bgView.layer.opacity = 1
+    } completion: { _ in
+      self.activityIndicator.startAnimating()
+    }
+  }
+
+  public func hide() {
+    UIView.animate(withDuration: 0.5,
+                   delay: 0,
+                   options: .curveEaseInOut) {
+      self.bgView.layer.opacity = 0
+    } completion: { _ in
+      self.activityIndicator.stopAnimating()
+      self.bgView.removeFromSuperview()
     }
   }
 }

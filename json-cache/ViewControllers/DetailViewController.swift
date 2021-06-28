@@ -35,7 +35,7 @@ class DetailViewController: UIViewController {
     navigationItem.title = shop.shopName
     layoutCollectionView()
   }
-  
+
   private func layoutCollectionView() {
     view.addSubview(collectionView)
     collectionView.snp.makeConstraints { make in
