@@ -25,6 +25,7 @@ class DetailViewController: UIViewController {
     cl.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "c")
     cl.register(DetailTableCell.self, forCellWithReuseIdentifier: "tbc")
     cl.register(SameCollectionViewCell.self, forCellWithReuseIdentifier: "sameCell")
+    cl.register(TransportCell.self, forCellWithReuseIdentifier: "tr")
     return cl
   }()
 
@@ -64,6 +65,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sameCell", for: indexPath) as? SameCollectionViewCell
       cell?.delegate = self
       return cell!
+    case 2:
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tr", for: indexPath) as? TransportCell
+      return cell!
     default:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
       cell.backgroundColor = .red
@@ -78,6 +82,8 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     case 0:
       return CGSize(width: collectionView.frame.width, height: 250)
     case 1:
+      return CGSize(width: collectionView.frame.width, height: 230)
+    case 2:
       return CGSize(width: collectionView.frame.width, height: 230)
     default:
       return CGSize(width: collectionView.frame.width, height: 80)
