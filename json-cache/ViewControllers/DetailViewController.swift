@@ -93,6 +93,9 @@ extension DetailViewController: DetailTableCellDelegate {
 
 extension DetailViewController: SameCollectionViewCellDelegate {
   func didTapInCell(index: IndexPath) {
-    print("Did tap index = \(index)")
+    let vc = ItemDetailViewController()
+    vc.configTitle("\(index)")
+    let nvc = UINavigationController(rootViewController: vc)
+    self.present(nvc, animated: true, completion: nil)
   }
 }
