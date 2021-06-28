@@ -20,6 +20,8 @@
 		2E8215832689AAB2007AC519 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215822689AAB2007AC519 /* UICollectionView+Extension.swift */; };
 		2E8215852689B3A0007AC519 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215842689B3A0007AC519 /* UITableView+Extension.swift */; };
 		2E8215872689B472007AC519 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215862689B472007AC519 /* BaseTableViewCell.swift */; };
+		2E8215892689BE00007AC519 /* RadioCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215882689BE00007AC519 /* RadioCollectionViewCell.swift */; };
+		2E82158B2689C09B007AC519 /* RadioButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */; };
 		2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E326856B4000922CEE /* AppDelegate.swift */; };
 		2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E526856B4000922CEE /* SceneDelegate.swift */; };
 		2EE234E826856B4000922CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E726856B4000922CEE /* ViewController.swift */; };
@@ -50,6 +52,8 @@
 		2E8215822689AAB2007AC519 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		2E8215842689B3A0007AC519 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		2E8215862689B472007AC519 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		2E8215882689BE00007AC519 /* RadioCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioCollectionViewCell.swift; sourceTree = "<group>"; };
+		2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonViewCell.swift; sourceTree = "<group>"; };
 		2EE234E026856B4000922CEE /* json-cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "json-cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE234E326856B4000922CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE234E526856B4000922CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 				2E82157C26896BB7007AC519 /* TransporterTableViewCell.swift */,
 				2E8215802689A8BB007AC519 /* BaseCollectionViewCell.swift */,
 				2E8215862689B472007AC519 /* BaseTableViewCell.swift */,
+				2E8215882689BE00007AC519 /* RadioCollectionViewCell.swift */,
+				2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -326,11 +332,13 @@
 				2EE234FA2685928F00922CEE /* Shop.swift in Sources */,
 				2E82157026894F9D007AC519 /* ItemDetailViewController.swift in Sources */,
 				2E8215832689AAB2007AC519 /* UICollectionView+Extension.swift in Sources */,
+				2E82158B2689C09B007AC519 /* RadioButtonViewCell.swift in Sources */,
 				2EE234FC2685934100922CEE /* HttpMethod.swift in Sources */,
 				2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */,
 				2E76BB642688AB8F00619874 /* SameCollectionViewCell.swift in Sources */,
 				2E8215872689B472007AC519 /* BaseTableViewCell.swift in Sources */,
 				2E76BB62268885B400619874 /* DetailTableCell.swift in Sources */,
+				2E8215892689BE00007AC519 /* RadioCollectionViewCell.swift in Sources */,
 				2E76BB662688B0A600619874 /* ItemCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

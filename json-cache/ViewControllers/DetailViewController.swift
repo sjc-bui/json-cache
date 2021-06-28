@@ -26,6 +26,7 @@ class DetailViewController: UIViewController {
     cl.register(DetailTableCell.self, forCellWithReuseIdentifier: "tbc")
     cl.register(SameCollectionViewCell.self, forCellWithReuseIdentifier: "sameCell")
     cl.register(TransportCell.self, forCellWithReuseIdentifier: "tr")
+    cl.registerReusableCell(RadioCollectionViewCell.self)
     return cl
   }()
 
@@ -68,6 +69,10 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     case 2:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tr", for: indexPath) as? TransportCell
       return cell!
+    case 3:
+      let cell: RadioCollectionViewCell = collectionView.dequeueReusableCell(for: indexPath)
+      cell.delegate = self
+      return cell
     default:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
       cell.backgroundColor = .red
@@ -85,6 +90,8 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
       return CGSize(width: collectionView.frame.width, height: 230)
     case 2:
       return CGSize(width: collectionView.frame.width, height: 230)
+    case 3:
+      return CGSize(width: collectionView.frame.width, height: 70)
     default:
       return CGSize(width: collectionView.frame.width, height: 80)
     }
@@ -103,5 +110,11 @@ extension DetailViewController: SameCollectionViewCellDelegate {
     vc.configTitle("\(index)")
     let nvc = UINavigationController(rootViewController: vc)
     self.present(nvc, animated: true, completion: nil)
+  }
+}
+
+extension DetailViewController: RadioCollectionViewCellDelegate {
+  func didSelected(index: Int) {
+    print("Selected at \(index)")
   }
 }
