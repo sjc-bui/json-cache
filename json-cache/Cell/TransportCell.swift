@@ -21,7 +21,7 @@ enum TransportType: Int {
   }
 }
 
-class TransportCell: UICollectionViewCell {
+class TransportCell: BaseCollectionViewCell {
 
   fileprivate var transporterType: TransportType?
 
@@ -35,20 +35,12 @@ class TransportCell: UICollectionViewCell {
     tableView.layer.masksToBounds = true
     tableView.layer.borderColor   = UIColor.red.cgColor
     tableView.layer.borderWidth   = 1
-    tableView.register(TransporterTableViewCell.self, forCellReuseIdentifier: "tr")
+    tableView.registerReuseCell(TransporterTableViewCell.self)
     return tableView
   }()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    initialize()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func initialize() {
+  override func initialize() {
+    super.initialize()
     addSubview(transportTable)
     transportTable.snp.makeConstraints { make in
       make.top.equalToSuperview()
@@ -77,11 +69,10 @@ extension TransportCell: UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "tr", for: indexPath) as! TransporterTableViewCell
+    let cell: TransporterTableViewCell = tableView.dequeueReusableCell(for: indexPath)
     if let type = TransportType(rawValue: indexPath.row) {
       cell.configCell(type: type)
     }
-    cell.selectionStyle = .none
     cell.isSelected = (transporterType == TransportType(rawValue: indexPath.row))
     return cell
   }

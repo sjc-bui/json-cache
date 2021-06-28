@@ -11,7 +11,7 @@ protocol SameCollectionViewCellDelegate: AnyObject {
   func didTapInCell(index: IndexPath)
 }
 
-class SameCollectionViewCell: UICollectionViewCell {
+class SameCollectionViewCell: BaseCollectionViewCell {
 
   weak var delegate: SameCollectionViewCellDelegate?
 
@@ -25,21 +25,13 @@ class SameCollectionViewCell: UICollectionViewCell {
     cl.showsHorizontalScrollIndicator = false
     cl.delegate = self
     cl.dataSource = self
-    cl.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: "same")
+    cl.registerReusableCell(ItemCollectionViewCell.self)
     cl.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: -16)
     return cl
   }()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    initialize()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func initialize() {
+  override func initialize() {
+    super.initialize()
     layoutCell()
   }
 
@@ -66,7 +58,7 @@ extension SameCollectionViewCell: UICollectionViewDataSource {
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "same", for: indexPath) as! ItemCollectionViewCell
+    let cell: ItemCollectionViewCell = collectionView.dequeueReusableCell(for: indexPath)
     cell.config("\(indexPath.row)")
     cell.backgroundColor = .green
     return cell

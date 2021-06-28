@@ -220,16 +220,18 @@ extension Array {
 }
 
 extension UIWindow {
-    static var key: UIWindow? {
-        if #available(iOS 13, *) {
-            return UIApplication.shared.windows.first { $0.isKeyWindow }
-        } else {
-            return UIApplication.shared.keyWindow
-        }
+  static var key: UIWindow? {
+    if #available(iOS 13, *) {
+      return UIApplication.shared.windows.first { $0.isKeyWindow }
+    } else {
+      return UIApplication.shared.keyWindow
     }
+  }
 }
 
-public class Loader{
+public final class Loader {
+
+  static let shared = Loader()
 
   fileprivate lazy var overlayView: UIView = {
     let view = UIView(frame: .zero)
@@ -256,8 +258,6 @@ public class Loader{
     view.layer.opacity = 0
     return view
   }()
-
-  static let shared = Loader()
 
   public func show(view: UIView) {
     bgView.frame = view.bounds

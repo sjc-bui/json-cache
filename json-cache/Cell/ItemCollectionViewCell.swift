@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ItemCollectionViewCell: UICollectionViewCell {
+class ItemCollectionViewCell: BaseCollectionViewCell {
 
   fileprivate lazy var coverView: UIView = {
     let view = UIView(frame: .zero)
@@ -23,16 +23,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
     return label
   }()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    initialize()
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func initialize() {
+  override func initialize() {
+    super.initialize()
     layoutCoverView()
     layoutTitle()
   }

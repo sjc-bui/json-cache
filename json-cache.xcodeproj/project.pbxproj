@@ -16,6 +16,10 @@
 		2E82157326895780007AC519 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E82157226895780007AC519 /* UIColor+Extension.swift */; };
 		2E82157B26896AD7007AC519 /* TransportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E82157A26896AD7007AC519 /* TransportCell.swift */; };
 		2E82157D26896BB7007AC519 /* TransporterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E82157C26896BB7007AC519 /* TransporterTableViewCell.swift */; };
+		2E8215812689A8BB007AC519 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215802689A8BB007AC519 /* BaseCollectionViewCell.swift */; };
+		2E8215832689AAB2007AC519 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215822689AAB2007AC519 /* UICollectionView+Extension.swift */; };
+		2E8215852689B3A0007AC519 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215842689B3A0007AC519 /* UITableView+Extension.swift */; };
+		2E8215872689B472007AC519 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215862689B472007AC519 /* BaseTableViewCell.swift */; };
 		2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E326856B4000922CEE /* AppDelegate.swift */; };
 		2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E526856B4000922CEE /* SceneDelegate.swift */; };
 		2EE234E826856B4000922CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E726856B4000922CEE /* ViewController.swift */; };
@@ -42,6 +46,10 @@
 		2E82157226895780007AC519 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		2E82157A26896AD7007AC519 /* TransportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportCell.swift; sourceTree = "<group>"; };
 		2E82157C26896BB7007AC519 /* TransporterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransporterTableViewCell.swift; sourceTree = "<group>"; };
+		2E8215802689A8BB007AC519 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		2E8215822689AAB2007AC519 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		2E8215842689B3A0007AC519 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		2E8215862689B472007AC519 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		2EE234E026856B4000922CEE /* json-cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "json-cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE234E326856B4000922CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE234E526856B4000922CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +96,8 @@
 				2E76BB652688B0A600619874 /* ItemCollectionViewCell.swift */,
 				2E82157A26896AD7007AC519 /* TransportCell.swift */,
 				2E82157C26896BB7007AC519 /* TransporterTableViewCell.swift */,
+				2E8215802689A8BB007AC519 /* BaseCollectionViewCell.swift */,
+				2E8215862689B472007AC519 /* BaseTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -107,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				2E82157226895780007AC519 /* UIColor+Extension.swift */,
+				2E8215822689AAB2007AC519 /* UICollectionView+Extension.swift */,
+				2E8215842689B3A0007AC519 /* UITableView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,18 +314,22 @@
 				2E82157B26896AD7007AC519 /* TransportCell.swift in Sources */,
 				2EE234FE2685952600922CEE /* ShopEndPoint.swift in Sources */,
 				2EE234E826856B4000922CEE /* ViewController.swift in Sources */,
+				2E8215812689A8BB007AC519 /* BaseCollectionViewCell.swift in Sources */,
 				2EE2350326859B0200922CEE /* EndPointType.swift in Sources */,
 				2E82157326895780007AC519 /* UIColor+Extension.swift in Sources */,
 				2EE2350026859A5900922CEE /* APIConfig.swift in Sources */,
 				2E82156E26894AB8007AC519 /* BaseViewController.swift in Sources */,
 				2EE234F82685925F00922CEE /* APIError.swift in Sources */,
+				2E8215852689B3A0007AC519 /* UITableView+Extension.swift in Sources */,
 				2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */,
 				2EE235052685A7FE00922CEE /* Cache.swift in Sources */,
 				2EE234FA2685928F00922CEE /* Shop.swift in Sources */,
 				2E82157026894F9D007AC519 /* ItemDetailViewController.swift in Sources */,
+				2E8215832689AAB2007AC519 /* UICollectionView+Extension.swift in Sources */,
 				2EE234FC2685934100922CEE /* HttpMethod.swift in Sources */,
 				2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */,
 				2E76BB642688AB8F00619874 /* SameCollectionViewCell.swift in Sources */,
+				2E8215872689B472007AC519 /* BaseTableViewCell.swift in Sources */,
 				2E76BB62268885B400619874 /* DetailTableCell.swift in Sources */,
 				2E76BB662688B0A600619874 /* ItemCollectionViewCell.swift in Sources */,
 			);

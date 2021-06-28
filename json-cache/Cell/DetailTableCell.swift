@@ -11,21 +11,12 @@ protocol DetailTableCellDelegate: AnyObject {
   func didTapSeemore(detail: String)
 }
 
-class DetailTableCell: UICollectionViewCell {
-  
+class DetailTableCell: BaseCollectionViewCell {
+
   weak var delegate: DetailTableCellDelegate?
-  
+
   private var detail: String = ""
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    initialize()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
   fileprivate lazy var tableView: UITableView = {
     let tb = UITableView(frame: .zero, style: .plain)
     tb.delegate = self
@@ -52,7 +43,8 @@ class DetailTableCell: UICollectionViewCell {
     delegate?.didTapSeemore(detail: detail)
   }
   
-  func initialize() {
+  override func initialize() {
+    super.initialize()
     layoutTableView()
     layoutSeemore()
     detail = "Detail cell"

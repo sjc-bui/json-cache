@@ -14,7 +14,7 @@ class ImageManager {
   static let logoVietNamPost = UIImage(named: "logoVietNamPost")
 }
 
-class TransporterTableViewCell: UITableViewCell {
+class TransporterTableViewCell: BaseTableViewCell {
 
   fileprivate lazy var checkImageView: UIImageView = {
     let image = UIImageView()
@@ -29,16 +29,7 @@ class TransporterTableViewCell: UITableViewCell {
     image.contentMode = .scaleAspectFit
     return image
   }()
-  
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-    initialize()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
+
   override var isSelected: Bool {
     didSet {
       if isSelected {
@@ -53,7 +44,8 @@ class TransporterTableViewCell: UITableViewCell {
     logoImageView.image = type.logo
   }
   
-  func initialize() {
+  override func initialize() {
+    super.initialize()
     layoutCheckImage()
     layoutLogoImage()
   }
