@@ -35,6 +35,7 @@ class BaseViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
+    handleNotificationExample()
   }
 
   func setLeftBarButton(image: UIImage? = nil) {
@@ -76,4 +77,21 @@ class BaseViewController: UIViewController {
   }
   
   @objc func touchUpLeftBtn() { }
+
+  func handleNotificationExample() {
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(handleNotification),
+                                           name: NSNotification.Name.example,
+                                           object: nil)
+  }
+
+  @objc func handleNotification() {
+    print("Do something !!!")
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self,
+                                              name: NSNotification.Name.example,
+                                              object: nil)
+  }
 }

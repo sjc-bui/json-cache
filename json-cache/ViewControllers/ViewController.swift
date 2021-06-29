@@ -10,7 +10,7 @@ import QBToast
 
 typealias Shops = [Shop]
 
-class ViewController: UIViewController, URLSessionDelegate {
+class ViewController: BaseViewController, URLSessionDelegate {
 
   var shops: Shops = []
   private var currentTask: URLSessionTask?
@@ -206,6 +206,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     detail.config(item)
     self.navigationController?.pushViewController(detail, animated: true)
     tableView.deselectRow(at: indexPath, animated: true)
+//    NotificationCenter.default.post(name: NSNotification.Name.example, object: nil)
   }
 }
 

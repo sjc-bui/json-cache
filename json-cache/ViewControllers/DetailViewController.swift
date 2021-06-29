@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: BaseViewController {
 
   fileprivate lazy var shop = Shop()
 
@@ -46,7 +46,6 @@ class DetailViewController: UIViewController {
 
   func config(_ shop: Shop) {
     self.shop = shop
-    print("Call here!!!")
   }
 }
 
@@ -116,5 +115,6 @@ extension DetailViewController: SameCollectionViewCellDelegate {
 extension DetailViewController: RadioCollectionViewCellDelegate {
   func didSelected(index: Int) {
     print("Selected at \(index)")
+    NotificationCenter.default.post(name: NSNotification.Name.example, object: nil)
   }
 }
