@@ -14,6 +14,7 @@ protocol CustomModalViewDelegate: AnyObject {
 class CustomModalViewController: UIViewController {
 
   weak var delegate: CustomModalViewDelegate?
+  private var selected = 0
 
   private let defaultHeight: CGFloat = 300
   private let dismissHeight: CGFloat = 200
@@ -39,10 +40,17 @@ class CustomModalViewController: UIViewController {
   fileprivate lazy var tableView: UITableView = {
     let table = UITableView()
     table.showsVerticalScrollIndicator = false
-    table.register(UITableViewCell.self, forCellReuseIdentifier: "tb")
+    table.registerReuseCell(ModalViewCell.self)
+    table.separatorStyle = .none
     table.delegate = self
     table.dataSource = self
     return table
+  }()
+
+  fileprivate lazy var lineView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .lightGray
+    return view
   }()
 
   var containerViewHeightConstraint: NSLayoutConstraint?
@@ -125,10 +133,17 @@ class CustomModalViewController: UIViewController {
     dimmedView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animateDismiss)))
 
     view.addSubview(containerView)
+    containerView.addSubview(lineView)
+    lineView.snp.makeConstraints { make in
+      make.height.equalTo(0.5)
+      make.width.equalToSuperview()
+      make.top.equalToSuperview().offset(50)
+    }
+
     containerView.addSubview(tableView)
     tableView.snp.makeConstraints { make in
       make.left.right.bottom.equalToSuperview()
-      make.top.equalToSuperview().offset(50)
+      make.top.equalTo(lineView.snp.bottom)
     }
 
     containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -177,7 +192,8 @@ class CustomModalViewController: UIViewController {
 extension CustomModalViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     delegate?.selectedAt(index: indexPath.row)
-    tableView.deselectRow(at: indexPath, animated: true)
+    self.selected = indexPath.row
+    tableView.reloadData()
   }
 }
 
@@ -187,9 +203,13 @@ extension CustomModalViewController: UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "tb")
-    cell.textLabel?.text = "Text Label at index: \(indexPath.row)"
-    cell.detailTextLabel?.text = "detailTextLabel"
+    let cell: ModalViewCell = tableView.dequeueReusableCell(for: indexPath)
+    cell.config(title: "テキスト: \(indexPath.row)", status: "none")
+    cell.isSelected = (self.selected == indexPath.row)
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 60
   }
 }

@@ -28,6 +28,7 @@
 		2E862556268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862555268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift */; };
 		2E862558268AECE90053BC56 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862557268AECE90053BC56 /* CustomModalViewController.swift */; };
 		2E86255A268B01DB0053BC56 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862559268B01DB0053BC56 /* Loader.swift */; };
+		2E86255C268B0B320053BC56 /* ModalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86255B268B0B320053BC56 /* ModalViewCell.swift */; };
 		2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E326856B4000922CEE /* AppDelegate.swift */; };
 		2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E526856B4000922CEE /* SceneDelegate.swift */; };
 		2EE234E826856B4000922CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E726856B4000922CEE /* ViewController.swift */; };
@@ -66,6 +67,7 @@
 		2E862555268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E862557268AECE90053BC56 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		2E862559268B01DB0053BC56 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		2E86255B268B0B320053BC56 /* ModalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewCell.swift; sourceTree = "<group>"; };
 		2EE234E026856B4000922CEE /* json-cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "json-cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE234E326856B4000922CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE234E526856B4000922CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */,
 				2E862553268AC24C0053BC56 /* CheckListCollectionViewCell.swift */,
 				2E862555268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift */,
+				2E86255B268B0B320053BC56 /* ModalViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				2E82158B2689C09B007AC519 /* RadioButtonViewCell.swift in Sources */,
 				2EE234FC2685934100922CEE /* HttpMethod.swift in Sources */,
 				2E86255A268B01DB0053BC56 /* Loader.swift in Sources */,
+				2E86255C268B0B320053BC56 /* ModalViewCell.swift in Sources */,
 				2E862552268AB9C20053BC56 /* BottomSheetViewController.swift in Sources */,
 				2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */,
 				2E862558268AECE90053BC56 /* CustomModalViewController.swift in Sources */,
