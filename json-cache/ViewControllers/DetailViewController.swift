@@ -27,6 +27,7 @@ class DetailViewController: BaseViewController {
     cl.register(SameCollectionViewCell.self, forCellWithReuseIdentifier: "sameCell")
     cl.register(TransportCell.self, forCellWithReuseIdentifier: "tr")
     cl.registerReusableCell(RadioCollectionViewCell.self)
+    cl.registerReusableCell(CheckListCollectionViewCell.self)
     return cl
   }()
 
@@ -72,6 +73,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
       let cell: RadioCollectionViewCell = collectionView.dequeueReusableCell(for: indexPath)
       cell.delegate = self
       return cell
+    case 4:
+      let cell: CheckListCollectionViewCell = collectionView.dequeueReusableCell(for: indexPath)
+      return cell
     default:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "c", for: indexPath)
       cell.backgroundColor = .red
@@ -92,7 +96,7 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     case 3:
       return CGSize(width: collectionView.frame.width, height: 70)
     default:
-      return CGSize(width: collectionView.frame.width, height: 80)
+      return CGSize(width: collectionView.frame.width, height: 280)
     }
   }
 }

@@ -23,6 +23,9 @@
 		2E8215892689BE00007AC519 /* RadioCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8215882689BE00007AC519 /* RadioCollectionViewCell.swift */; };
 		2E82158B2689C09B007AC519 /* RadioButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */; };
 		2E862550268AAAAA0053BC56 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86254F268AAAAA0053BC56 /* Notification+Extension.swift */; };
+		2E862552268AB9C20053BC56 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862551268AB9C20053BC56 /* BottomSheetViewController.swift */; };
+		2E862554268AC24C0053BC56 /* CheckListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862553268AC24C0053BC56 /* CheckListCollectionViewCell.swift */; };
+		2E862556268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862555268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift */; };
 		2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E326856B4000922CEE /* AppDelegate.swift */; };
 		2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E526856B4000922CEE /* SceneDelegate.swift */; };
 		2EE234E826856B4000922CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E726856B4000922CEE /* ViewController.swift */; };
@@ -56,6 +59,9 @@
 		2E8215882689BE00007AC519 /* RadioCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonViewCell.swift; sourceTree = "<group>"; };
 		2E86254F268AAAAA0053BC56 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		2E862551268AB9C20053BC56 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		2E862553268AC24C0053BC56 /* CheckListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListCollectionViewCell.swift; sourceTree = "<group>"; };
+		2E862555268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EE234E026856B4000922CEE /* json-cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "json-cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE234E326856B4000922CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE234E526856B4000922CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +112,8 @@
 				2E8215862689B472007AC519 /* BaseTableViewCell.swift */,
 				2E8215882689BE00007AC519 /* RadioCollectionViewCell.swift */,
 				2E82158A2689C09B007AC519 /* RadioButtonViewCell.swift */,
+				2E862553268AC24C0053BC56 /* CheckListCollectionViewCell.swift */,
+				2E862555268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -117,6 +125,7 @@
 				2EE234E726856B4000922CEE /* ViewController.swift */,
 				2E82156D26894AB8007AC519 /* BaseViewController.swift */,
 				2E82156F26894F9D007AC519 /* ItemDetailViewController.swift */,
+				2E862551268AB9C20053BC56 /* BottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -329,6 +338,8 @@
 				2EE2350026859A5900922CEE /* APIConfig.swift in Sources */,
 				2E82156E26894AB8007AC519 /* BaseViewController.swift in Sources */,
 				2EE234F82685925F00922CEE /* APIError.swift in Sources */,
+				2E862554268AC24C0053BC56 /* CheckListCollectionViewCell.swift in Sources */,
+				2E862556268AC3FD0053BC56 /* CheckBoxCollectionViewCell.swift in Sources */,
 				2E8215852689B3A0007AC519 /* UITableView+Extension.swift in Sources */,
 				2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */,
 				2EE235052685A7FE00922CEE /* Cache.swift in Sources */,
@@ -337,6 +348,7 @@
 				2E8215832689AAB2007AC519 /* UICollectionView+Extension.swift in Sources */,
 				2E82158B2689C09B007AC519 /* RadioButtonViewCell.swift in Sources */,
 				2EE234FC2685934100922CEE /* HttpMethod.swift in Sources */,
+				2E862552268AB9C20053BC56 /* BottomSheetViewController.swift in Sources */,
 				2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */,
 				2E76BB642688AB8F00619874 /* SameCollectionViewCell.swift in Sources */,
 				2E8215872689B472007AC519 /* BaseTableViewCell.swift in Sources */,

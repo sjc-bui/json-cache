@@ -75,7 +75,7 @@ class BaseViewController: UIViewController {
       customButton.addTarget(target.target, action: target.selector, for: .touchUpInside)
       return UIBarButtonItem(customView: customButton)
   }
-  
+
   @objc func touchUpLeftBtn() { }
 
   func handleNotificationExample() {
