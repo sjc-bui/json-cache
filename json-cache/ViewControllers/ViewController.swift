@@ -135,6 +135,7 @@ class ViewController: BaseViewController, URLSessionDelegate {
   @objc func nump() {
     let numpad = NumPadViewController()
     numpad.modalPresentationStyle = .overCurrentContext
+    numpad.delegate = self
     self.present(numpad, animated: true, completion: nil)
   }
 
@@ -265,5 +266,20 @@ extension UIWindow {
 extension ViewController: CustomModalViewDelegate {
   func selectedAt(index: Int) {
     print("Select from bottom modal at index = \(index).")
+  }
+}
+
+extension ViewController: NumPadViewDelegate {
+  func didTapButton(_ numpad: Numpad, position: Position) {
+    switch position {
+      case (3, 0):
+        textField.text = nil
+      case (3, 2):
+        let current = textField.text! as String
+        textField.text! = String(current.dropLast())
+      default:
+        let text = numpad.item(at: position)!
+        textField.text! += text.title!
+    }
   }
 }

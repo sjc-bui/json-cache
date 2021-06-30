@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol NumPadViewDelegate: AnyObject {
+  func didTapButton(_ numpad: Numpad, position: Position)
+}
+
 class NumPadViewController: UIViewController {
+
+  weak var delegate: NumPadViewDelegate?
 
   fileprivate lazy var containerView: UIView = {
       let view = UIView()
@@ -19,6 +25,7 @@ class NumPadViewController: UIViewController {
 
   lazy var numpad: Numpad = {
     let pad = DefaulNumpad()
+    pad.delegate = self
     return pad
   }()
 
@@ -64,5 +71,11 @@ class NumPadViewController: UIViewController {
     containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
     containerViewHeightConstraint?.isActive = true
     containerViewBottomConstraint?.isActive = true
+  }
+}
+
+extension NumPadViewController: NumpadDelegate {
+  func numpad(_ numpad: Numpad, didSelectItem item: Item, atPosition position: Position) {
+    delegate?.didTapButton(numpad, position: position)
   }
 }

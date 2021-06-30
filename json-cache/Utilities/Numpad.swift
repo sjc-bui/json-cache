@@ -9,7 +9,7 @@ import UIKit
 
 public struct Item {
 
-  var backgroundColor: UIColor? = .white
+  var backgroundColor: UIColor? = UIColor(hex: "#FDFDFD")
   var selectedBackgroundColor: UIColor? = .clear
   var image: UIImage?
   var title: String?
@@ -46,6 +46,12 @@ public protocol NumpadDelegate: AnyObject {
   func numpad(_ numpad: Numpad, sizeForCellAtPosition position: Position) -> CGSize
 }
 
+extension NumpadDelegate {
+  func numpad(_ numpad: Numpad, didSelectItem item: Item, atPosition position: Position) {}
+
+  func numpad(_ numpad: Numpad, sizeForCellAtPosition position: Position) -> CGSize { return CGSize() }
+}
+
 open class Numpad: UIView {
 
   weak open var delegate: NumpadDelegate?
@@ -77,7 +83,7 @@ open class Numpad: UIView {
     addSubview(collectionView)
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: topAnchor),
-      collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -spacing),
+      collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -spacing),
       collectionView.widthAnchor.constraint(equalToConstant: defaultWidth),
       collectionView.centerXAnchor.constraint(equalTo: centerXAnchor)
     ])
@@ -112,12 +118,6 @@ extension Numpad: UICollectionViewDelegateFlowLayout {
   }
 }
 
-extension Numpad: UICollectionViewDelegate {
-  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//    print("do something.")
-  }
-}
-
 extension Numpad: UICollectionViewDataSource {
   public func numberOfSections(in collectionView: UICollectionView) -> Int {
     return dataSource?.numberOfRowsInNumpad(self) ?? 0
@@ -131,15 +131,19 @@ extension Numpad: UICollectionViewDataSource {
     let item = dataSource?.numpad(self, cellForItemAt: Position(row: indexPath.section, column: indexPath.item))
     let cell: NumpadViewCell = collectionView.dequeueReusableCell(for: indexPath)
     cell.item = item
-    cell.delegate = self
+    cell.buttonTapped = { [unowned self ] _ in
+      self.delegate?.numpad(self, didSelectItem: item ?? Item(), atPosition: Position(row: indexPath.section, column: indexPath.item))
+    }
     cell.backgroundColor = .clear
     return cell
   }
 }
 
-extension Numpad: NumpadViewCellDelegate {
-  func didTapNumber(tag: Int) {
-    print("Did tap at number \(tag)")
+extension Numpad {
+  func item(at position: Position) -> Item? {
+    let indexPath = IndexPath(item: position.column, section: position.row)
+    let item = collectionView.cellForItem(at: indexPath)
+    return (item as? NumpadViewCell)?.item
   }
 }
 

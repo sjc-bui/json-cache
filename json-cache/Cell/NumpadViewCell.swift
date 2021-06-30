@@ -7,12 +7,7 @@
 
 import UIKit
 
-protocol NumpadViewCellDelegate: AnyObject {
-  func didTapNumber(tag: Int)
-}
-
 class NumpadViewCell: BaseCollectionViewCell {
-  weak var delegate: NumpadViewCellDelegate?
 
   private var numButton: UIButton = {
     let button = UIButton()
@@ -52,7 +47,9 @@ class NumpadViewCell: BaseCollectionViewCell {
     numButton.addTarget(self, action: #selector(tap(_:)), for: .touchUpInside)
   }
 
+  var buttonTapped: ((UIButton) -> Void)?
+
   @objc func tap(_ sender: UIButton) {
-    delegate?.didTapNumber(tag: sender.tag)
+    buttonTapped?(sender)
   }
 }
