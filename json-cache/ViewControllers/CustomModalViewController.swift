@@ -20,6 +20,7 @@ class CustomModalViewController: UIViewController {
   private let dismissHeight: CGFloat = 200
   private let maxHeight: CGFloat = UIScreen.main.bounds.height - 64
   private var currentHeight: CGFloat = 300
+  let maxDimmedAlpha: CGFloat = 0.6
 
   fileprivate lazy var containerView: UIView = {
       let view = UIView()
@@ -29,11 +30,10 @@ class CustomModalViewController: UIViewController {
       return view
   }()
 
-  let maxDimmedAlpha: CGFloat = 0.6
   fileprivate lazy var dimmedView: UIView = {
       let view = UIView()
       view.backgroundColor = .black
-      view.alpha = maxDimmedAlpha
+      view.alpha = 0
       return view
   }()
 
@@ -64,7 +64,6 @@ class CustomModalViewController: UIViewController {
   }
 
   func animateShowDimmedView() {
-    dimmedView.alpha = 0
     UIView.animate(withDuration: 0.3) {
         self.dimmedView.alpha = self.maxDimmedAlpha
     }
@@ -171,7 +170,6 @@ class CustomModalViewController: UIViewController {
   }
 
   @objc func animateDismiss() {
-    dimmedView.alpha = maxDimmedAlpha
     UIView.animate(withDuration: 0.36,
                    delay: 0,
                    usingSpringWithDamping: 1,
