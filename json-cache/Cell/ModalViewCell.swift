@@ -12,7 +12,7 @@ class ModalViewCell: BaseTableViewCell {
   fileprivate lazy var checkImageView: UIImageView = {
     let image = UIImageView()
     image.contentMode = .scaleAspectFit
-    image.image = ImageManager.checkMarkUnCheck
+    image.image = UIImage(color: .white)
     return image
   }()
 
@@ -42,7 +42,7 @@ class ModalViewCell: BaseTableViewCell {
       if isSelected {
         checkImageView.image = ImageManager.checkMarkCheck
       } else {
-        checkImageView.image = ImageManager.checkMarkUnCheck
+        checkImageView.image = UIImage(color: .white)
       }
     }
   }
@@ -57,8 +57,8 @@ class ModalViewCell: BaseTableViewCell {
   func layoutImage() {
     addSubview(checkImageView)
     checkImageView.snp.makeConstraints { make in
-      make.width.height.equalTo(26)
-      make.left.equalToSuperview().offset(24)
+      make.width.height.equalTo(20)
+      make.left.equalToSuperview().offset(16)
       make.centerY.equalToSuperview()
     }
   }

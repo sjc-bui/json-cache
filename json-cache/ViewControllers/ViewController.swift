@@ -51,7 +51,9 @@ class ViewController: BaseViewController, URLSessionDelegate {
 
   func setNavButton() {
     let rightBarBtn = UIBarButtonItem(title: "Bottom", style: .plain, target: self, action: #selector(reloadDt))
+    let left = UIBarButtonItem(title: "Numpad", style: .plain, target: self, action: #selector(nump))
     navigationItem.rightBarButtonItem = rightBarBtn
+    navigationItem.leftBarButtonItem = left
   }
 
   @objc func pullToRefresh() {
@@ -108,6 +110,11 @@ class ViewController: BaseViewController, URLSessionDelegate {
     modal.modalPresentationStyle = .overCurrentContext
     modal.delegate = self
     self.present(modal, animated: false, completion: nil)
+  }
+  
+  @objc func nump() {
+    let numpad = NumPadViewController()
+    self.present(numpad, animated: true, completion: nil)
   }
 
   override func viewDidDisappear(_ animated: Bool) {

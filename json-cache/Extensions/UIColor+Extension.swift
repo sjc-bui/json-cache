@@ -7,6 +7,19 @@
 
 import UIKit
 
+extension UIImage {
+  convenience init(color: UIColor) {
+    let size = CGSize(width: 1, height: 1)
+    let rect = CGRect(origin: CGPoint(), size: size)
+    UIGraphicsBeginImageContextWithOptions(size, false, 0)
+    color.setFill()
+    UIRectFill(rect)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    self.init(cgImage: (image?.cgImage!)!)
+  }
+}
+
 extension UIColor {
     convenience init(hex: String) {
         var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
