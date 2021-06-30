@@ -17,7 +17,9 @@ class NumpadViewCell: BaseCollectionViewCell {
   private var numButton: UIButton = {
     let button = UIButton()
     button.titleLabel?.textAlignment = .center
-    button.setTitleColor(.blue, for: .normal)
+    button.setTitleColor(.gray, for: .normal)
+    button.clipsToBounds = true
+    button.layer.cornerRadius = 6
     return button
   }()
 

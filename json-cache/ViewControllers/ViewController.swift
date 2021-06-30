@@ -28,6 +28,15 @@ class ViewController: BaseViewController, URLSessionDelegate {
     return tb
   }()
 
+  private lazy var textField: UITextField = {
+    let tf = UITextField(frame: .zero)
+    tf.textAlignment = .left
+    tf.placeholder = "Delegate & DataSource"
+    tf.font = UIFont.systemFont(ofSize: 15)
+    tf.add(padding: .equalSpacing(10))
+    return tf
+  }()
+
   private lazy var fresh: UIRefreshControl = {
     let fr = UIRefreshControl()
     fr.tintColor = .systemRed
@@ -37,15 +46,26 @@ class ViewController: BaseViewController, URLSessionDelegate {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    layoutTextField()
     layoutTableView()
     setNavButton()
     fetch()
   }
 
+  func layoutTextField() {
+    view.addSubview(textField)
+    textField.snp.makeConstraints { make in
+      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.left.right.equalToSuperview()
+      make.height.equalTo(50)
+    }
+  }
+
   func layoutTableView() {
     view.addSubview(tableView)
     tableView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.equalTo(textField.snp.bottom)
+      make.left.right.bottom.equalToSuperview()
     }
   }
 
@@ -111,9 +131,10 @@ class ViewController: BaseViewController, URLSessionDelegate {
     modal.delegate = self
     self.present(modal, animated: false, completion: nil)
   }
-  
+
   @objc func nump() {
     let numpad = NumPadViewController()
+    numpad.modalPresentationStyle = .overCurrentContext
     self.present(numpad, animated: true, completion: nil)
   }
 

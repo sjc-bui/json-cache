@@ -8,13 +8,14 @@
 import UIKit
 
 public struct Item {
-  public var backgroundColor: UIColor? = .white
-  public var selectedBackgroundColor: UIColor? = .lightGray.withAlphaComponent(0.3)
-  public var image: UIImage?
-  public var title: String?
-  public var titleColor: UIColor? = .black
-  public var font: UIFont? = .systemFont(ofSize: 17)
-  public var tag: Int = 0
+
+  var backgroundColor: UIColor? = .white
+  var selectedBackgroundColor: UIColor? = .clear
+  var image: UIImage?
+  var title: String?
+  var titleColor: UIColor? = .black
+  var font: UIFont? = .systemFont(ofSize: 17)
+  var tag: Int = 0
 
   public init() {}
 
@@ -51,10 +52,15 @@ open class Numpad: UIView {
 
   weak open var dataSource: NumpadDataSource?
 
+  private let spacing: CGFloat = 4
+
+  private let defaultWidth = Device.shared.keyboardSize()
+
   fileprivate lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
-    layout.minimumLineSpacing = 0
-    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = spacing
+    layout.minimumInteritemSpacing = spacing
+    layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: 0, right: spacing)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsSelection = false
@@ -71,10 +77,18 @@ open class Numpad: UIView {
     addSubview(collectionView)
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: topAnchor),
-      collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+      collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -spacing),
+      collectionView.widthAnchor.constraint(equalToConstant: defaultWidth),
+      collectionView.centerXAnchor.constraint(equalTo: centerXAnchor)
     ])
+  }
+
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+  }
+
+  open func invalidateLayout() {
+      collectionView.collectionViewLayout.invalidateLayout()
   }
 
   required public init?(coder: NSCoder) {
@@ -84,19 +98,23 @@ open class Numpad: UIView {
 
 extension Numpad: UICollectionViewDelegateFlowLayout {
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let position = Position(row: indexPath.section, column: indexPath.item)
-    let size = delegate?.numpad(self, sizeForCellAtPosition: position) ?? CGSize()
-    //return !size.equalTo(CGSize()) ? size : .zero
-    let width = collectionView.bounds.size.width
-    let col = dataSource?.numpad(self, numberOfColumnsInRow: indexPath.section)
-    return CGSize(width: width / CGFloat(col ?? 0),
-                  height: 50)
+    let width  = defaultWidth
+    let height = collectionView.bounds.size.height
+
+    let col = dataSource?.numpad(self, numberOfColumnsInRow: indexPath.section) ?? 0
+    let row = dataSource?.numberOfRowsInNumpad(self) ?? 0
+
+    let totalSpace = CGFloat(col + 1) * spacing
+    let totalSpaceV = CGFloat(row + 1) * spacing
+
+    return CGSize(width: (width - totalSpace) / CGFloat(col),
+                  height: (height - totalSpaceV - spacing) / CGFloat(row))
   }
 }
 
 extension Numpad: UICollectionViewDelegate {
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    print("do something.")
+//    print("do something.")
   }
 }
 
@@ -114,6 +132,7 @@ extension Numpad: UICollectionViewDataSource {
     let cell: NumpadViewCell = collectionView.dequeueReusableCell(for: indexPath)
     cell.item = item
     cell.delegate = self
+    cell.backgroundColor = .clear
     return cell
   }
 }
@@ -170,7 +189,6 @@ extension DefaulNumpad: NumpadDataSource {
         item.title = "\(index + 1)"
         item.tag = index + 1
     }
-    item.titleColor = .orange
     item.font = UIFont.systemFont(ofSize: 30)
     return item
   }
