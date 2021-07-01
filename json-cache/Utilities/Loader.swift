@@ -33,7 +33,7 @@ public final class Loader {
     view.backgroundColor = UIColor.systemGroupedBackground
     view.autoresizingMask = [.flexibleLeftMargin,.flexibleTopMargin,.flexibleRightMargin,
                              .flexibleBottomMargin,.flexibleHeight, .flexibleWidth]
-    view.layer.opacity = 0
+    view.alpha = 0
     return view
   }()
 
@@ -57,7 +57,7 @@ public final class Loader {
     UIView.animate(withDuration: 0.5,
                    delay: 0,
                    options: .curveEaseInOut) {
-      self.bgView.layer.opacity = 1
+      self.bgView.alpha = 1
     } completion: { _ in
       self.activityIndicator.startAnimating()
     }
@@ -67,7 +67,7 @@ public final class Loader {
     UIView.animate(withDuration: 0.5,
                    delay: 0,
                    options: .curveEaseInOut) {
-      self.bgView.layer.opacity = 0
+      self.bgView.alpha = 0
     } completion: { _ in
       self.activityIndicator.stopAnimating()
       self.bgView.removeFromSuperview()
