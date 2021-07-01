@@ -10,12 +10,11 @@ import UIKit
 public struct Item {
 
   var backgroundColor: UIColor? = UIColor(hex: "#FDFDFD")
-  var selectedBackgroundColor: UIColor? = .clear
+  var selectedBackgroundColor: UIColor? = UIColor(hex: "#FDFDFD").withAlphaComponent(0.2)
   var image: UIImage?
   var title: String?
   var titleColor: UIColor? = .black
   var font: UIFont? = .systemFont(ofSize: 17)
-  var tag: Int = 0
 
   public init() {}
 
@@ -58,7 +57,7 @@ open class Numpad: UIView {
 
   weak open var dataSource: NumpadDataSource?
 
-  private let spacing: CGFloat = 4
+  private let spacing: CGFloat = 6
 
   private let defaultWidth = Device.shared.keyboardSize()
 
@@ -83,7 +82,7 @@ open class Numpad: UIView {
     addSubview(collectionView)
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: topAnchor),
-      collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -spacing),
+      collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
       collectionView.widthAnchor.constraint(equalToConstant: defaultWidth),
       collectionView.centerXAnchor.constraint(equalTo: centerXAnchor)
     ])
@@ -182,20 +181,18 @@ extension DefaulNumpad: NumpadDataSource {
     switch position {
       case (3, 0):
         item.title = "C"
-        item.tag = 100
+        item.backgroundColor = .clear
       case (3, 1):
         item.title = "0"
-        item.tag = 0
       case (3, 2):
         item.image = UIImage(named: "delete-back")
-        item.tag = 101
+        item.backgroundColor = .clear
       default:
         var index = (0..<position.row)
           .map { self.numpad(self, numberOfColumnsInRow: $0) }
           .reduce(0, +)
         index += position.column
         item.title = "\(index + 1)"
-        item.tag = index + 1
     }
     item.font = UIFont.systemFont(ofSize: 28, weight: .regular)
     return item

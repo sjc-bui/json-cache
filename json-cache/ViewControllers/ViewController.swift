@@ -36,6 +36,7 @@ class ViewController: BaseViewController, URLSessionDelegate {
     tf.font = UIFont.systemFont(ofSize: 15)
     tf.add(padding: .equalSpacing(10))
     tf.inputView = numpad
+    tf.inputAccessoryView = UIView()
     tf.delegate = self
     return tf
   }()

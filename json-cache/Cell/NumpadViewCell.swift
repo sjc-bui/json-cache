@@ -14,7 +14,7 @@ class NumpadViewCell: BaseCollectionViewCell {
     button.titleLabel?.textAlignment = .center
     button.setTitleColor(.gray, for: .normal)
     button.clipsToBounds = true
-    button.layer.cornerRadius = 6
+    button.layer.cornerRadius = 4
     return button
   }()
 
@@ -24,8 +24,6 @@ class NumpadViewCell: BaseCollectionViewCell {
       self.numButton.setTitleColor(item.titleColor, for: .normal)
       self.numButton.titleLabel?.font = item.font
       self.numButton.setImage(item.image, for: .normal)
-      self.numButton.tag = item.tag
-      self.numButton.setTitleColor(.red, for: .highlighted)
       var image = item.backgroundColor.map { UIImage(color: $0) }
       numButton.setBackgroundImage(image, for: .normal)
       image = item.selectedBackgroundColor.map { UIImage(color: $0) }
