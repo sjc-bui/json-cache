@@ -119,6 +119,5 @@ extension DetailViewController: SameCollectionViewCellDelegate {
 extension DetailViewController: RadioCollectionViewCellDelegate {
   func didSelected(index: Int) {
     print("Selected at \(index)")
-    NotificationCenter.default.post(name: NSNotification.Name.example, object: nil)
   }
 }

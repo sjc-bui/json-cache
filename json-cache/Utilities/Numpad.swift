@@ -63,9 +63,6 @@ open class Numpad: UIView {
 
   fileprivate lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
-    layout.minimumLineSpacing = spacing
-    layout.minimumInteritemSpacing = spacing
-    layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: 0, right: spacing)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsSelection = false
@@ -106,18 +103,30 @@ open class Numpad: UIView {
 }
 
 extension Numpad: UICollectionViewDelegateFlowLayout {
+
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    return UIEdgeInsets(top: spacing, left: spacing, bottom: 0, right: spacing)
+  }
+
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return spacing
+  }
+
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return spacing
+  }
+
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width  = defaultWidth
-    let height = collectionView.bounds.size.height
+    let viewBoundWidth = collectionView.bounds.size.height
 
     let col = dataSource?.numpad(self, numberOfColumnsInRow: indexPath.section) ?? 0
     let row = dataSource?.numberOfRowsInNumpad(self) ?? 0
 
-    let totalSpace = CGFloat(col + 1) * spacing
+    let totalSpaceH = CGFloat(col + 1) * spacing
     let totalSpaceV = CGFloat(row + 1) * spacing
 
-    return CGSize(width: (width - totalSpace) / CGFloat(col),
-                  height: (height - totalSpaceV - spacing) / CGFloat(row))
+    return CGSize(width: (defaultWidth - totalSpaceH) / CGFloat(col),
+                  height: (viewBoundWidth - totalSpaceV - spacing) / CGFloat(row))
   }
 }
 

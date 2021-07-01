@@ -8,5 +8,6 @@
 import UIKit
 
 extension Notification.Name {
-  static var example = Notification.Name("notificationExample")
+  static var reloadTable = Notification.Name("reload")
+  static var keyboardFocus = Notification.Name("focus")
 }

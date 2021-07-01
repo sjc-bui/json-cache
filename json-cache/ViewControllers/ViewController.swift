@@ -44,7 +44,6 @@ class ViewController: BaseViewController, URLSessionDelegate {
   private lazy var fresh: UIRefreshControl = {
     let fr = UIRefreshControl()
     fr.tintColor = .systemRed
-    fr.backgroundColor = .systemBlue
     fr.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     return fr
   }()
@@ -106,6 +105,7 @@ class ViewController: BaseViewController, URLSessionDelegate {
 
   @objc func pullToRefresh() {
     fetch()
+    NotificationCenter.default.post(name: NSNotification.Name.reloadTable, object: nil)
     fresh.endRefreshing()
   }
 
@@ -163,6 +163,7 @@ class ViewController: BaseViewController, URLSessionDelegate {
   @objc func endEdit() {
 //    view.endEditing(true)
     activeTextField?.resignFirstResponder()
+    NotificationCenter.default.post(name: NSNotification.Name.keyboardFocus, object: nil)
   }
 
   override func viewDidDisappear(_ animated: Bool) {
@@ -265,7 +266,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     detail.config(item)
     self.navigationController?.pushViewController(detail, animated: true)
     tableView.deselectRow(at: indexPath, animated: true)
-//    NotificationCenter.default.post(name: NSNotification.Name.example, object: nil)
   }
 }
 

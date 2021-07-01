@@ -23,7 +23,7 @@ public final class Loader {
   fileprivate lazy var activityIndicator: UIActivityIndicatorView = {
     let ai = UIActivityIndicatorView()
     ai.color = .gray
-    ai.style = .medium
+    ai.style = .large
     ai.hidesWhenStopped = true
     return ai
   }()

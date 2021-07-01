@@ -81,17 +81,29 @@ class BaseViewController: UIViewController {
   func handleNotificationExample() {
     NotificationCenter.default.addObserver(self,
                                            selector: #selector(handleNotification),
-                                           name: NSNotification.Name.example,
+                                           name: NSNotification.Name.reloadTable,
+                                           object: nil)
+
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(handleFocus),
+                                           name: NSNotification.Name.keyboardFocus,
                                            object: nil)
   }
 
   @objc func handleNotification() {
-    print("Do something !!!")
+    print("reloading...")
+  }
+
+  @objc func handleFocus() {
+    print("focusing...")
   }
 
   deinit {
     NotificationCenter.default.removeObserver(self,
-                                              name: NSNotification.Name.example,
+                                              name: NSNotification.Name.reloadTable,
+                                              object: nil)
+    NotificationCenter.default.removeObserver(self,
+                                              name: NSNotification.Name.keyboardFocus,
                                               object: nil)
   }
 }
