@@ -16,6 +16,7 @@ class ViewController: BaseViewController, URLSessionDelegate {
   private var currentTask: URLSessionTask?
   private let cache = Cache<String, Shops>()
   private let name = "fileName2"
+  var activeTextField: UITextField?
 
   private lazy var tableView: UITableView = {
     let tb = UITableView(frame: .zero, style: .plain)
@@ -34,28 +35,45 @@ class ViewController: BaseViewController, URLSessionDelegate {
     tf.placeholder = "Delegate & DataSource"
     tf.font = UIFont.systemFont(ofSize: 15)
     tf.add(padding: .equalSpacing(10))
+    tf.inputView = numpad
+    tf.delegate = self
     return tf
   }()
 
   private lazy var fresh: UIRefreshControl = {
     let fr = UIRefreshControl()
     fr.tintColor = .systemRed
+    fr.backgroundColor = .systemBlue
     fr.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     return fr
+  }()
+
+  lazy var numpad: Numpad = {
+    let num = DefaulNumpad()
+    num.delegate = self
+    return num
   }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     layoutTextField()
     layoutTableView()
+    layoutNumpad()
     setNavButton()
     fetch()
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    let tap = UITapGestureRecognizer(target: self, action: #selector(endEdit))
+    tap.cancelsTouchesInView = false
+    self.view.addGestureRecognizer(tap)
   }
 
   func layoutTextField() {
     view.addSubview(textField)
     textField.snp.makeConstraints { make in
-      make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      make.top.equalToSuperview().offset(70)
       make.left.right.equalToSuperview()
       make.height.equalTo(50)
     }
@@ -69,11 +87,20 @@ class ViewController: BaseViewController, URLSessionDelegate {
     }
   }
 
+  func layoutNumpad() {
+    view.addSubview(numpad)
+    numpad.snp.makeConstraints { make in
+      make.left.right.equalToSuperview()
+      make.height.equalTo(216)
+      make.bottom.equalToSuperview().offset(216)
+    }
+  }
+
   func setNavButton() {
     let rightBarBtn = UIBarButtonItem(title: "Bottom", style: .plain, target: self, action: #selector(reloadDt))
-    let left = UIBarButtonItem(title: "Numpad", style: .plain, target: self, action: #selector(nump))
+//    let left = UIBarButtonItem(title: "Numpad", style: .plain, target: self, action: #selector(nump))
     navigationItem.rightBarButtonItem = rightBarBtn
-    navigationItem.leftBarButtonItem = left
+//    navigationItem.leftBarButtonItem = left
   }
 
   @objc func pullToRefresh() {
@@ -132,11 +159,9 @@ class ViewController: BaseViewController, URLSessionDelegate {
     self.present(modal, animated: false, completion: nil)
   }
 
-  @objc func nump() {
-    let numpad = NumPadViewController()
-    numpad.modalPresentationStyle = .overCurrentContext
-    numpad.delegate = self
-    self.present(numpad, animated: true, completion: nil)
+  @objc func endEdit() {
+//    view.endEditing(true)
+    activeTextField?.resignFirstResponder()
   }
 
   override func viewDidDisappear(_ animated: Bool) {
@@ -184,7 +209,7 @@ class ViewController: BaseViewController, URLSessionDelegate {
     guard let request = request else { return }
 
     let config: URLSessionConfiguration = URLSessionConfiguration.default
-    config.timeoutIntervalForRequest = 10
+    config.timeoutIntervalForRequest = 30
     config.timeoutIntervalForResource = 50
     let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
 
@@ -269,17 +294,41 @@ extension ViewController: CustomModalViewDelegate {
   }
 }
 
-extension ViewController: NumPadViewDelegate {
-  func didTapButton(_ numpad: Numpad, position: Position) {
+//extension ViewController: NumPadViewDelegate {
+//  func didTapButton(_ numpad: Numpad, position: Position) {
+//    switch position {
+//      case (3, 0):
+//        textField.text = nil
+//      case (3, 2):
+//        let current = textField.text! as String
+//        textField.text! = String(current.dropLast())
+//      default:
+//        let text = numpad.item(at: position)!
+//        textField.text! += text.title!
+//    }
+//  }
+//}
+
+extension ViewController: UITextFieldDelegate {
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    self.activeTextField = textField
+  }
+
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    self.activeTextField = nil
+  }
+}
+
+extension ViewController: NumpadDelegate {
+  func numpad(_ numpad: Numpad, didSelectItem item: Item, atPosition position: Position) {
     switch position {
       case (3, 0):
-        textField.text = nil
+        activeTextField?.text = nil
       case (3, 2):
-        let current = textField.text! as String
-        textField.text! = String(current.dropLast())
+        activeTextField?.deleteBackward()
       default:
         let text = numpad.item(at: position)!
-        textField.text! += text.title!
+        activeTextField?.insertText(text.title!)
     }
   }
 }

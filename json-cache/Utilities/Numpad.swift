@@ -89,6 +89,10 @@ open class Numpad: UIView {
     ])
   }
 
+  open override var intrinsicContentSize: CGSize {
+    return CGSize(width: UIView.noIntrinsicMetric, height: 0)
+  }
+
   open override func layoutSubviews() {
     super.layoutSubviews()
   }
@@ -183,7 +187,7 @@ extension DefaulNumpad: NumpadDataSource {
         item.title = "0"
         item.tag = 0
       case (3, 2):
-        item.title = "←"
+        item.image = UIImage(named: "delete-back")
         item.tag = 101
       default:
         var index = (0..<position.row)
@@ -193,7 +197,7 @@ extension DefaulNumpad: NumpadDataSource {
         item.title = "\(index + 1)"
         item.tag = index + 1
     }
-    item.font = UIFont.systemFont(ofSize: 30)
+    item.font = UIFont.systemFont(ofSize: 28, weight: .regular)
     return item
   }
 }
