@@ -15,6 +15,7 @@ public struct Item {
   var title: String?
   var titleColor: UIColor? = .black
   var font: UIFont? = .systemFont(ofSize: 17)
+  var cornerRadius: CGFloat = 4
 
   public init() {}
 
@@ -120,7 +121,7 @@ extension Numpad: UICollectionViewDelegateFlowLayout {
     let viewBoundWidth = collectionView.bounds.size.height
 
     let col = dataSource?.numpad(self, numberOfColumnsInRow: indexPath.section) ?? 0
-    let row = dataSource?.numberOfRowsInNumpad(self) ?? 0
+    let row = self.numberOfRows()
 
     let totalSpaceH = CGFloat(col + 1) * spacing
     let totalSpaceV = CGFloat(row + 1) * spacing
@@ -132,16 +133,17 @@ extension Numpad: UICollectionViewDelegateFlowLayout {
 
 extension Numpad: UICollectionViewDataSource {
   public func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return dataSource?.numberOfRowsInNumpad(self) ?? 0
+    return self.numberOfRows()
   }
 
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return dataSource?.numpad(self, numberOfColumnsInRow: section) ?? 0
+    return self.numberOfColumns(section: section)
   }
 
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let item = dataSource?.numpad(self, cellForItemAt: Position(row: indexPath.section, column: indexPath.item))
+    var item = dataSource?.numpad(self, cellForItemAt: Position(row: indexPath.section, column: indexPath.item))
     let cell: NumpadViewCell = collectionView.dequeueReusableCell(for: indexPath)
+    item?.cornerRadius = 20
     cell.item = item
     cell.buttonTapped = { [unowned self ] _ in
       self.delegate?.numpad(self, didSelectItem: item ?? Item(), atPosition: Position(row: indexPath.section, column: indexPath.item))
@@ -156,6 +158,14 @@ extension Numpad {
     let indexPath = IndexPath(item: position.column, section: position.row)
     let item = collectionView.cellForItem(at: indexPath)
     return (item as? NumpadViewCell)?.item
+  }
+
+  func numberOfRows() -> Int {
+    return dataSource?.numberOfRowsInNumpad(self) ?? 0
+  }
+
+  func numberOfColumns(section: Int) -> Int {
+    return dataSource?.numpad(self, numberOfColumnsInRow: section) ?? 0
   }
 }
 

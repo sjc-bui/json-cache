@@ -7,7 +7,7 @@ target 'json-cache' do
   pod 'QBToast'
   pod 'SnapKit', '~>4.2.0'
   pod 'RxSwift'
-  pod 'RxSwift'
+  pod 'RxCocoa'
 
   # Pods for json-cache
 

@@ -24,6 +24,7 @@ class NumpadViewCell: BaseCollectionViewCell {
       self.numButton.setTitleColor(item.titleColor, for: .normal)
       self.numButton.titleLabel?.font = item.font
       self.numButton.setImage(item.image, for: .normal)
+      self.numButton.layer.cornerRadius = item.cornerRadius
       var image = item.backgroundColor.map { UIImage(color: $0) }
       numButton.setBackgroundImage(image, for: .normal)
       image = item.selectedBackgroundColor.map { UIImage(color: $0) }
