@@ -98,9 +98,14 @@ class ViewController: BaseViewController, URLSessionDelegate {
 
   func setNavButton() {
     let rightBarBtn = UIBarButtonItem(title: "Bottom", style: .plain, target: self, action: #selector(reloadDt))
-//    let left = UIBarButtonItem(title: "Numpad", style: .plain, target: self, action: #selector(nump))
+    let left = UIBarButtonItem(title: "Following", style: .plain, target: self, action: #selector(showSheet))
     navigationItem.rightBarButtonItem = rightBarBtn
-//    navigationItem.leftBarButtonItem = left
+    navigationItem.leftBarButtonItem = left
+  }
+
+  @objc func showSheet() {
+    let bl = BlankSheetViewController()
+    self.navigationController?.pushViewController(bl, animated: true)
   }
 
   @objc func pullToRefresh() {
@@ -216,6 +221,15 @@ class ViewController: BaseViewController, URLSessionDelegate {
     let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
 
     currentTask = session.dataTask(with: request) { data, response, error in
+      if error != nil {
+        switch (error as? URLError)?.code {
+        case .some(.timedOut):
+          completion(.timeout, nil)
+        default:
+          completion(.undefined, nil)
+        }
+      }
+
       guard let res = response as? HTTPURLResponse else {
         completion(.requestFailed(description: error?.localizedDescription ?? "No description"), nil)
         return

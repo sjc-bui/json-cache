@@ -6,6 +6,8 @@ target 'json-cache' do
   use_frameworks!
   pod 'QBToast'
   pod 'SnapKit', '~>4.2.0'
+  pod 'RxSwift'
+  pod 'RxSwift'
 
   # Pods for json-cache
 

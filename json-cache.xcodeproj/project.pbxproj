@@ -28,6 +28,7 @@
 		2E862558268AECE90053BC56 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862557268AECE90053BC56 /* CustomModalViewController.swift */; };
 		2E86255A268B01DB0053BC56 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E862559268B01DB0053BC56 /* Loader.swift */; };
 		2E86255C268B0B320053BC56 /* ModalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86255B268B0B320053BC56 /* ModalViewCell.swift */; };
+		2EBF8E19268E935400FCCF74 /* BlankSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF8E18268E935400FCCF74 /* BlankSheetViewController.swift */; };
 		2EE234E426856B4000922CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E326856B4000922CEE /* AppDelegate.swift */; };
 		2EE234E626856B4000922CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E526856B4000922CEE /* SceneDelegate.swift */; };
 		2EE234E826856B4000922CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE234E726856B4000922CEE /* ViewController.swift */; };
@@ -71,6 +72,7 @@
 		2E862557268AECE90053BC56 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		2E862559268B01DB0053BC56 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		2E86255B268B0B320053BC56 /* ModalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewCell.swift; sourceTree = "<group>"; };
+		2EBF8E18268E935400FCCF74 /* BlankSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSheetViewController.swift; sourceTree = "<group>"; };
 		2EE234E026856B4000922CEE /* json-cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "json-cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE234E326856B4000922CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE234E526856B4000922CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				2E82156F26894F9D007AC519 /* ItemDetailViewController.swift */,
 				2E862557268AECE90053BC56 /* CustomModalViewController.swift */,
 				2EE6C6F8268C0A3800632C9B /* NumPadViewController.swift */,
+				2EBF8E18268E935400FCCF74 /* BlankSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				2EE234FE2685952600922CEE /* ShopEndPoint.swift in Sources */,
 				2EE234E826856B4000922CEE /* ViewController.swift in Sources */,
 				2E8215812689A8BB007AC519 /* BaseCollectionViewCell.swift in Sources */,
+				2EBF8E19268E935400FCCF74 /* BlankSheetViewController.swift in Sources */,
 				2EE2350326859B0200922CEE /* EndPointType.swift in Sources */,
 				2E82157326895780007AC519 /* UIColor+Extension.swift in Sources */,
 				2EE6C6FD268C533F00632C9B /* UITextField+Extension.swift in Sources */,
