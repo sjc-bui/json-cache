@@ -9,65 +9,85 @@ import UIKit
 import RxSwift
 
 class BlankSheetViewController: UIViewController {
+  private var options = [
+    ["あ", "い", "う", "え", "お"],
+    ["か", "き", "く", "け", "こ"],
+    ["さ", "し", "す", "せ", "そ"],
+    ["た", "ち", "つ", "て", "と"],
+    ["な", "に", "ぬ", "ね", "の"],
+    ["は", "ひ", "ふ", "へ", "ほ"],
+    ["ま", "み", "む", "め", "も"],
+    ["や", "ゆ", "よ"],
+    ["ら", "り", "る", "れ", "ろ"],
+    ["わ"]
+  ]
 
-  let scrollView = UIScrollView()
-  let contentView = UIView()
+  private var element: Int = 0
+  private var selectedRow: Int = 0
+
+  private lazy var tableView: UITableView = {
+    let table = UITableView(frame: .zero, style: .grouped)
+    table.showsVerticalScrollIndicator = false
+    table.dataSource = self
+    table.delegate = self
+    table.isScrollEnabled = false
+    return table
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    setupScrollView()
-    setupViews()
+    layoutTable()
   }
 
-  func setupScrollView(){
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
-    contentView.translatesAutoresizingMaskIntoConstraints = false
-    
-    view.addSubview(scrollView)
-    scrollView.addSubview(contentView)
-    
-    scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    
-    contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+  private func layoutTable() {
+    self.view.addSubview(tableView)
+    tableView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
 
-  func setupViews(){
-    contentView.addSubview(label1)
-    label1.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-    label1.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-    label1.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
-    
-    contentView.addSubview(label2)
-    label2.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-    label2.topAnchor.constraint(equalTo: label1.bottomAnchor, constant: 25).isActive = true
-    label2.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
-    label2.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+}
+
+extension BlankSheetViewController: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return options.count
   }
 
-  let label1: UILabel = {
-    let label = UILabel()
-    label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.............."
-    label.numberOfLines = 0
-    label.sizeToFit()
-    label.textColor = UIColor.white
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = UITableViewCell(style: .default, reuseIdentifier: "c")
+    cell.textLabel?.text = "\(options[indexPath.row][element])"
+    cell.textLabel?.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+    return cell
+  }
 
-  let label2: UILabel = {
-    let label = UILabel()
-    label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    label.numberOfLines = 0
-    label.sizeToFit()
-    label.textColor = UIColor.white
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return "注文履歴"
+  }
+}
+
+extension BlankSheetViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if selectedRow != indexPath.row {
+      element = 0
+      self.tableView.reloadRows(at: [IndexPath(row: selectedRow, section: indexPath.section)], with: .automatic)
+      selectedRow = indexPath.row
+    }
+
+    let indexCount = options[indexPath.row].count
+    if element >= indexCount {
+      element = 0
+    }
+
+    self.tableView.reloadRows(at: [IndexPath(row: indexPath.row, section: indexPath.section)], with: .automatic)
+    element += 1
+    self.tableView.deselectRow(at: indexPath, animated: true)
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 54
+  }
 }

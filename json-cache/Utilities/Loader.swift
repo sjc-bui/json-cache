@@ -67,7 +67,9 @@ public final class Loader {
     UIView.animate(withDuration: 0.5,
                    delay: 0,
                    options: .curveEaseInOut) {
-      self.bgView.alpha = 0
+      DispatchQueue.main.async {
+        self.bgView.alpha = 0
+      }
     } completion: { _ in
       self.activityIndicator.stopAnimating()
       self.bgView.removeFromSuperview()
